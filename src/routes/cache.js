@@ -112,7 +112,7 @@ function routes(app) {
     }
   });
 
-  router.clearGroup = function (target) {
+  const clearGroup = function (target) {
     if (target) {
       target = 'group-' + target;
       // Returns elements of the list associated to the target/key 0 being the
@@ -165,7 +165,12 @@ function routes(app) {
 
   // });
 
-  return router;
+  return {
+    cacheMethod: {
+      clearGroup
+    },
+    router
+  };
 }
 
 export default routes;
