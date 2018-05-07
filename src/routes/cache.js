@@ -103,7 +103,7 @@ function routes(app) {
              */
             res.status(HTTP_OK).json({
               message:
-                `cache already cleared for the group key: ${req.params.target}`,
+                `cache already cleared for the group key: ${target}`,
               status: HTTP_NO_CONTENT
             });
           }
@@ -121,7 +121,7 @@ function routes(app) {
         if (err) {
           console.log({
             message: 'something went wrong' + err.message
-          })
+          });
         } else {
           // If the list/group existed and contains something
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
@@ -129,9 +129,9 @@ function routes(app) {
             h.clearGroup(target).then(r => {
               console.log({
                 message:
-                  `cache cleared for the group key: ${req.params.target}`,
+                  `cache cleared for the group key: ${target}`,
                 status: HTTP_OK
-              })
+              });
             });
           } else {
             /**
@@ -139,16 +139,16 @@ function routes(app) {
              * Must use HTTP_OK with express as HTTP's RFC stats 204 should not
              * provide a body, message would then be lost.
              */
-             console.log({
-               message:
-                 `cache already cleared for the group key: ${req.params.target}`,
-               status: HTTP_NO_CONTENT
-             })            
+            console.log({
+              message:
+               `cache already cleared for the group key: ${target}`,
+              status: HTTP_NO_CONTENT
+            });
           }
         }
       });
     }
-  }
+  };
 
   // add route to display cache index
   // this has been removed for performance issues
