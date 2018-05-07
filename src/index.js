@@ -4,6 +4,7 @@ import { cache as hookCache } from './hooks/cache';
 import { removeCacheInformation as hookRemoveCacheInformation } from './hooks/cache';
 import { before as redisBeforeHook} from './hooks/redis';
 import { after as redisAfterHook} from './hooks/redis';
+import { clearGroup as redisClearGroupHook} from './hooks/redis';
 
 export default {
   redisClient,
@@ -11,5 +12,6 @@ export default {
   hookCache,
   hookRemoveCacheInformation,
   redisBeforeHook,
-  redisAfterHook
+  redisAfterHook,
+  redisClearGroupHook
 };

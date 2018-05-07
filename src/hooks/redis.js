@@ -1,6 +1,7 @@
 import moment from 'moment';
 import chalk from 'chalk';
 import { parsePath } from './helpers/path';
+import RedisCache from '../routes/helpers/redis';
 
 const defaults = {};
 
@@ -83,3 +84,43 @@ export function after(options) { // eslint-disable-line no-unused-vars
   };
 };
 
+export function clearGroup(target) { // eslint-disable-line no-unused-vars
+  return function (hook) {
+    if (target) {
+      const client = hook.app.get('redisClient');
+      const h = new RedisCache(client);
+
+      target = 'group-' + target;
+      // Returns elements of the list associated to the target/key 0 being the
+      // first and -1 specifying get all till the latest
+      client.lrange(target, 0, -1, (err, reply) => {
+        if (err) {
+          console.log({
+            message: 'something went wrong' + err.message
+          });
+        } else {
+          // If the list/group existed and contains something
+          if (reply && Array.isArray(reply) && (reply.length > 0)) {
+            // Clear existing cached group key
+            h.clearGroup(target).then(r => {
+              console.log({
+                message:
+                  `cache cleared for the group key: ${target}`
+              });
+            });
+          } else {
+            /**
+             * Empty reply means the key does not exist.
+             * Must use HTTP_OK with express as HTTP's RFC stats 204 should not
+             * provide a body, message would then be lost.
+             */
+            console.log({
+              message:
+               `cache already cleared for the group key: ${target}`
+            });
+          }
+        }
+      });
+    }
+  };
+};
