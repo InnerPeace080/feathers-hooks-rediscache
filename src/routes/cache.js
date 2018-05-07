@@ -112,7 +112,7 @@ function routes(app) {
     }
   });
 
-  router.clearGroup = (target)=>{
+  router.clearGroup = function (target) {
     if (target) {
       target = 'group-' + target;
       // Returns elements of the list associated to the target/key 0 being the

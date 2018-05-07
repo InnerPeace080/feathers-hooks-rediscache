@@ -25,6 +25,7 @@
   ],
 
   "rules": {
+    "no-duplicate-imports":0,
     "no-invalid-this":0,
     "block-scoped-var": 2,
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
