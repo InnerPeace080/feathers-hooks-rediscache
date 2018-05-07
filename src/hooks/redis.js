@@ -41,6 +41,10 @@ export function after(options) { // eslint-disable-line no-unused-vars
   options = Object.assign({}, defaults, options);
 
   return function (hook) {
+    if (!hook.result.cache) {
+      console.log('cache undefined');
+      return (hook);
+    }
     return new Promise(resolve => {
       if (!hook.result.cache.cached) {
         const cacheOptions = hook.app.get('redisCache');
