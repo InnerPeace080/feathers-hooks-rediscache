@@ -15,7 +15,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
       const env = cacheOptions.env || 'production';
       const path = parsePath(hook, cacheOptions);
 
-      client.get(path, (err, reply) => {
+      client.get(`cache:${path}`, (err, reply) => {
         if (err !== null) resolve(hook);
         if (reply) {
           let data = JSON.parse(reply);
@@ -66,10 +66,10 @@ export function after(options) { // eslint-disable-line no-unused-vars
         console.log('path', path);
         console.log('result', JSON.stringify(hook.result));
 
-        client.set(path, JSON.stringify(hook.result));
-        client.expire(path, hook.result.cache.duration);
+        client.set(`cache:${path}`, JSON.stringify(hook.result));
+        client.expire(`cache:${path}`, hook.result.cache.duration);
         if (hook.path) {
-          client.rpush(hook.result.cache.group, path);
+          client.rpush(`cache:${hook.result.cache.group}`, `cache:${path}`);
         }
 
         /* istanbul ignore next */
@@ -100,7 +100,7 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
       target = 'group-' + target;
       // Returns elements of the list associated to the target/key 0 being the
       // first and -1 specifying get all till the latest
-      client.lrange(target, 0, -1, (err, reply) => {
+      client.lrange(`cache:${target}`, 0, -1, (err, reply) => {
         if (err) {
           console.log({
             message: 'something went wrong' + err.message
@@ -109,7 +109,7 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
           // If the list/group existed and contains something
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
             // Clear existing cached group key
-            h.clearGroup(target).then(r => {
+            h.clearGroup(`cache:${target}`).then(r => {
               console.log({
                 message:
                   `cache cleared for the group key: ${target}`
