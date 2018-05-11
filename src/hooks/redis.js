@@ -16,6 +16,9 @@ export function before(options) { // eslint-disable-line no-unused-vars
       const path = parsePath(hook, cacheOptions);
 
       client.get(`cache:${path}`, (err, reply) => {
+        console.log('PATH', `cache:${path}`);
+        console.log('err', err);
+        console.log('err', reply);
         if (err !== null) resolve(hook);
         if (reply) {
           let data = JSON.parse(reply);
