@@ -20,7 +20,7 @@ export function cache(options) { // eslint-disable-line no-unused-vars
       }
 
       cache = Object.assign({}, cache, {
-        cached: false,
+        // cached: false,
         duration: options.duration || 3600 * 24
       });
 
