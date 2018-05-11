@@ -92,6 +92,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
 
 export function clearGroup(target) { // eslint-disable-line no-unused-vars
   return function (hook) {
+    target = target || hook.path;
     if (target) {
       const client = hook.app.get('redisClient');
       const h = new RedisCache(client);
