@@ -46,7 +46,8 @@ export function after(options) { // eslint-disable-line no-unused-vars
         const cacheOptions = hook.app.get('redisCache');
         const env = cacheOptions.env || 'production';
         const cachingDefault = cacheOptions.defaultDuration ? cacheOptions.defaultDuration : 3600 * 24;
-        const duration = hook.result.cache.duration || cachingDefault;
+        const duration = (hook.result && hook.result.cache && hook.result.cache.duration) ?
+          hook.result.cache.duration : cachingDefault;
         const client = hook.app.get('redisClient');
         const path = parsePath(hook, cacheOptions);
 
