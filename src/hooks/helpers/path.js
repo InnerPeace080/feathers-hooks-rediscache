@@ -1,4 +1,4 @@
-import qs from 'qs';
+// import qs from 'qs';
 
 function parseNestedPath(path, params) {
   const re = new RegExp(':([^\\/\\?]+)\\??', 'g');
@@ -28,13 +28,15 @@ function parsePath(hook, config = {removePathFromCacheKey: false, parseNestedRou
       path += '/';
     }
     if (Object.keys(q).length > 0) {
-      path += `${hook.id}?${qs.stringify(q, { encode: false })}`;
+      // path += `${hook.id}?${qs.stringify(q, { encode: false })}`;
+      path += `${hook.id}?${JSON.stringify(q)}`;
     } else {
       path += `${hook.id}`;
     }
   } else {
     if (Object.keys(q).length > 0) {
-      path += `?${qs.stringify(q, { encode: false })}`;
+      // path += `?${qs.stringify(q, { encode: false })}`;
+      path += `?${JSON.stringify(q)}`;
     }
   }
 
