@@ -87,17 +87,16 @@ export function after(options) { // eslint-disable-line no-unused-vars
 
 export function clearGroup(target) { // eslint-disable-line no-unused-vars
   return function (hook) {
-    target = target || hook.path;
-    console.log('target', target);
-    console.log('hook.path', hook.path);
-    if (target) {
+    let targetTemp = target || hook.path;
+
+    if (targetTemp) {
       const client = hook.app.get('redisClient');
       const h = new RedisCache(client);
 
-      target = 'group-' + target;
+      targetTemp = 'group-' + targetTemp;
       // Returns elements of the list associated to the target/key 0 being the
       // first and -1 specifying get all till the latest
-      client.lrange(`cache:${target}`, 0, -1, (err, reply) => {
+      client.lrange(`cache:${targetTemp}`, 0, -1, (err, reply) => {
         if (err) {
           console.log({
             message: 'something went wrong' + err.message
@@ -106,10 +105,10 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
           // If the list/group existed and contains something
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
             // Clear existing cached group key
-            h.clearGroup(`cache:${target}`).then(r => {
+            h.clearGroup(`cache:${targetTemp}`).then(r => {
               console.log({
                 message:
-                  `cache cleared for the group key: ${target}`
+                  `cache cleared for the group key: ${targetTemp}`
               });
             });
           } else {
@@ -120,7 +119,7 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
              */
             console.log({
               message:
-               `cache already cleared for the group key: ${target}`
+               `cache already cleared for the group key: ${targetTemp}`
             });
           }
         }
