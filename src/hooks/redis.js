@@ -61,6 +61,11 @@ export function after(options) { // eslint-disable-line no-unused-vars
           key: path
         });
 
+        console.log('result', hook.result);
+        console.log('group', hook.result.cache.group);
+        console.log('path', path);
+        console.log('result', JSON.stringify(hook.result));
+
         client.set(path, JSON.stringify(hook.result));
         client.expire(path, hook.result.cache.duration);
         if (hook.path) {
