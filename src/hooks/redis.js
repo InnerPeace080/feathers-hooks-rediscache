@@ -52,7 +52,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
         const path = parsePath(hook, cacheOptions);
 
         // adding a cache object
-        Object.assign(hook.result.cache, {
+        Object.assign(hook.result.cache || {}, {
           cached: true,
           duration: duration,
           expiresOn: moment().add(moment.duration(duration, 'seconds')),
