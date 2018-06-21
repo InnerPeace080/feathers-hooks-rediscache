@@ -10,6 +10,8 @@ export function before(options) { // eslint-disable-line no-unused-vars
 
   return function (hook) {
     return new Promise(resolve => {
+      console.log('hook', hook);
+      console.log('hook.app', hook.app.get('redisClient'), hook.app.get('redisCache'));
       const client = hook.app.get('redisClient');
       const cacheOptions = hook.app.get('redisCache');
       const env = cacheOptions.env || 'production';
