@@ -19,6 +19,10 @@ export function before(options) { // eslint-disable-line no-unused-vars
         if (err !== null) resolve(hook);
         if (reply) {
           let data = JSON.parse(reply);
+
+          if (!data.cache) {
+            resolve(hook);
+          }
           const duration = moment(data.cache.expiresOn).format('DD MMMM YYYY - HH:mm:ss');
 
           hook.result = data;
