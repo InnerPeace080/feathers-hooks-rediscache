@@ -16,12 +16,13 @@ export function before(options) { // eslint-disable-line no-unused-vars
       const path = parsePath(hook, cacheOptions);
 
       client.get(`cache:${path}`, (err, reply) => {
-        if (err !== null) resolve(hook);
+        if (err !== null) {resolve(hook); return;}
         if (reply) {
           let data = JSON.parse(reply);
 
           if (!data.cache) {
             resolve(hook);
+            return;
           }
           const duration = moment(data.cache.expiresOn).format('DD MMMM YYYY - HH:mm:ss');
 
@@ -35,6 +36,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
           }
         } else {
           resolve(hook);
+          return;
         }
       });
     });
