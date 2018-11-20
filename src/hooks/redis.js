@@ -14,7 +14,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
       const cacheOptions = hook.app.get('redisCache');
       const env = cacheOptions.env || 'production';
       const path = parsePath(hook, cacheOptions);
-
+      hook.pathForRedisCache = path
       client.get(`cache:${path}`, (err, reply) => {
         if (err !== null) {resolve(hook); return;}
         if (reply) {
@@ -55,7 +55,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
         const duration = (hook.result && hook.result.cache) ?
           hook.result.cache.duration : cachingDefault;
         const client = hook.app.get('redisClient');
-        const path = parsePath(hook, cacheOptions);
+        const path = (hook.pathForRedisCache || parsePath(hook, cacheOptions));
 
         // adding a cache object
         hook.result.cache = Object.assign(hook.result.cache || {}, {
