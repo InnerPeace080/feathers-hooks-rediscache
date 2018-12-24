@@ -59,6 +59,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
         const path = (hook.pathForRedisCache || parsePath(hook, cacheOptions));
 
         // adding a cache object
+        hook.result = hook.result || {};
         hook.result.cache = Object.assign(hook.result.cache || {}, {
           cached: true,
           duration: duration,
