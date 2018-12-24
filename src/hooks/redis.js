@@ -81,7 +81,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
         }
       }
 
-      if (hook.result.cache.hasOwnProperty('wrapped')) {
+      if (hook.result && hook.result.cache && hook.result.cache.hasOwnProperty('wrapped')) {
         const { wrapped } = hook.result.cache;
 
         hook.result = wrapped;
