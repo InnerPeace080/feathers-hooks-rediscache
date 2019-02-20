@@ -31,7 +31,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
           resolve(hook);
 
           /* istanbul ignore next */
-          if (env !== 'test') {
+          if (env !== 'production') {
             console.log(`${chalk.cyan('[redis]')} returning cached value for ${chalk.green(path)}.`);
             console.log(`> Expires on ${duration}.`);
           }
@@ -76,7 +76,7 @@ export function after(options) { // eslint-disable-line no-unused-vars
         }
 
         /* istanbul ignore next */
-        if (env !== 'test') {
+        if (env !== 'production') {
           console.log(`${chalk.cyan('[redis]')} added ${chalk.green(path)} to the cache.`);
           console.log(`> Expires in ${moment.duration(duration, 'seconds').humanize()}.`);
         }
@@ -101,12 +101,15 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
       const client = hook.app.get('redisClient');
       const h = new RedisCache(client);
 
+      const cacheOptions = hook.app.get('redisCache');
+      const env = cacheOptions.env || 'production';
+
       targetTemp = 'group-' + targetTemp;
       // Returns elements of the list associated to the target/key 0 being the
       // first and -1 specifying get all till the latest
       client.lrange(`cache:${targetTemp}`, 0, -1, (err, reply) => {
         if (err) {
-          console.log({
+          console.error({
             message: 'something went wrong' + err.message
           });
         } else {
@@ -114,10 +117,12 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
             // Clear existing cached group key
             h.clearGroup(`cache:${targetTemp}`).then(r => {
-              console.log({
-                message:
-                  `cache cleared for the group key: ${targetTemp}`
-              });
+              if (env !== 'production') {
+                console.log({
+                  message:
+                    `cache cleared for the group key: ${targetTemp}`
+                });
+              }
             });
           } else {
             /**
@@ -125,10 +130,12 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
              * Must use HTTP_OK with express as HTTP's RFC stats 204 should not
              * provide a body, message would then be lost.
              */
-            console.log({
-              message:
-               `cache already cleared for the group key: ${targetTemp}`
-            });
+            if (env !== 'production') {
+              console.log({
+                message:
+                 `cache already cleared for the group key: ${targetTemp}`
+              });
+            }
           }
         }
       });
