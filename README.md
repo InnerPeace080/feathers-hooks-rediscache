@@ -41,7 +41,7 @@ In the same fashion if you have many variants of the same endpoint that return s
 #### Clearing cache
 These are all listed in a redis list under `group-articles` and can be busted by calling `/cache/clear/group/article` or `/cache/clear/group/articles` it does not matter. All urls keys will be purged.
 
-You can also purge single cached paths as by doing GET requests on 
+You can also purge single cached paths as by doing GET requests on
 ```js
 '/cache/clear/single/articles'
 '/cache/clear/single/articles/article'
@@ -118,7 +118,7 @@ The default environement is production, but it is anoying when running test as t
 
 Available routes:
 ```js
-// this route is disable as I noticed issues when redis has many keys, 
+// this route is disable as I noticed issues when redis has many keys,
 // I will put it back when I have a more robust solution
 // '/cache/index' // returns an array with all the keys
 '/cache/clear' // clears the whole cache
@@ -144,7 +144,7 @@ const app = feathers()
   .configure(rest())
   .configure(hooks())
   // configure the redis client
-  .configure(redisClient)
+  .configure(redisClient())   // redisClient, config
 
   // Needed for parsing bodies (login)
   .use(bodyParser.json())
