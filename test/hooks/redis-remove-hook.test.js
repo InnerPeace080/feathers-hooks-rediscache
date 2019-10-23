@@ -27,7 +27,7 @@ describe('Redis Remove Cache Object Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data).not.to.have.property('cache');
@@ -50,7 +50,7 @@ describe('Redis Remove Cache Object Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data).to.deep.equal({property: 'test'});

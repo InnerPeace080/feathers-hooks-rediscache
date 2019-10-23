@@ -87,7 +87,7 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -107,7 +107,7 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -128,8 +128,8 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
-      after(result).then(result => {
+    return hook(mock).then((result) => {
+      after(result).then((result) => {
         const data = result.result;
 
         expect(data).to.be.an('array').that.deep.equals([
@@ -154,7 +154,7 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -174,7 +174,7 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -194,7 +194,7 @@ describe('Redis Before Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result;
 
       expect(data.path).to.equal('does-nothing');
@@ -210,14 +210,14 @@ describe('Redis Before Hook', () => {
       id: '',
       app: {
         get: (what) => {
-          return what === 'redisCache'
-            ? {env: 'test'}
-            : client;
+          return what === 'redisCache' ?
+            {env: 'test'} :
+            client;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       expect(result.app.get('redisCache').env).to.equal('test');
     });
   });

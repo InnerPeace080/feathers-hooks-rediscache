@@ -38,7 +38,7 @@ describe('Cache clearing http routes', () => {
     await rpushAsync('group-test-key', ['path-1', 'path-2', 'path-3']);
 
     // Create an express server asynchronously before tests
-    const serverPromise = new Promise(resolve => {
+    const serverPromise = new Promise((resolve) => {
       const app = feathers();
 
       app.configure(rest());
@@ -47,7 +47,7 @@ describe('Cache clearing http routes', () => {
       app.configure(redisClient);
       // Needed for parsing bodies (login)
       app.use(bodyParser.json());
-      app.use(bodyParser.urlencoded({ extended: true }))
+      app.use(bodyParser.urlencoded({ extended: true }));
       // add the cache routes (endpoints) to the app
       app.use('/cache', routes(app));
       app.use(errorHandler());
@@ -195,7 +195,7 @@ describe('Cache clearing http routes', () => {
     });
 
   it('really removed keys in a group', () => {
-    client.get('path-2', reply => {
+    client.get('path-2', (reply) => {
       expect(reply).to.be.equal(null);
     });
   });

@@ -28,7 +28,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -60,7 +60,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -93,7 +93,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -128,12 +128,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -169,12 +170,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -216,12 +218,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -263,12 +266,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -310,12 +314,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -348,7 +353,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -381,7 +386,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -418,12 +423,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -456,7 +462,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -489,7 +495,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -522,7 +528,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -559,12 +565,13 @@ describe('Redis After Hook', () => {
 
             return cache;
           }
+
           return undefined;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -596,7 +603,7 @@ describe('Redis After Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -621,14 +628,14 @@ describe('Redis After Hook', () => {
       },
       app: {
         get: (what) => {
-          return what === 'redisCache'
-            ? {env: 'test'}
-            : client;
+          return what === 'redisCache' ?
+            {env: 'test'} :
+            client;
         }
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       expect(result.app.get('redisCache').env).to.equal('test');
     });
   });

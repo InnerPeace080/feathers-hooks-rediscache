@@ -50,13 +50,14 @@ describe('Cache functions', () => {
     const reply = await getAsync('cache-test-key');
 
     expect(reply).to.equal('value');
-    return h.clearSingle('cache-test-key').then(data => {
+
+    return h.clearSingle('cache-test-key').then((data) => {
       expect(data).to.equal(true);
     });
   });
 
   it('returns false when an item does not exist', () => {
-    return h.clearSingle('cache-does-not-exist').then(data => {
+    return h.clearSingle('cache-does-not-exist').then((data) => {
       expect(data).to.equal(false);
     });
   });
@@ -68,19 +69,19 @@ describe('Cache functions', () => {
   });
 
   it('removes all the item from a redis list array', () => {
-    return h.clearGroup('group-test-key').then(data => {
+    return h.clearGroup('group-test-key').then((data) => {
       expect(data).to.equal(true);
     });
   });
 
   it('removes all the item from a redis list array', () => {
-    return h.clearGroup('group-does-not-exist').then(data => {
+    return h.clearGroup('group-does-not-exist').then((data) => {
       expect(data).to.equal(false);
     });
   });
 
   it('really removed keys in a group', () => {
-    client.get('path-2', reply => {
+    client.get('path-2', (reply) => {
       expect(reply).to.be.equal(null);
     });
   });

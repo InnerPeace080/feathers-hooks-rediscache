@@ -18,7 +18,7 @@ describe('Cache Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(true);
@@ -38,7 +38,7 @@ describe('Cache Hook', () => {
       }
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.cached).to.equal(false);
@@ -60,7 +60,7 @@ describe('Cache Hook', () => {
       ]
     };
 
-    return hook(mock).then(result => {
+    return hook(mock).then((result) => {
       const data = result.result;
 
       expect(data.cache.wrapped).to.be.an('array').that.deep.equals([
