@@ -6,6 +6,7 @@ function parseNestedPath(path, params) {
 
   while ((match = re.exec(path)) !== null) {
     if (Object.keys(params.route).includes(match[1])) {
+      // eslint-disable-next-line no-param-reassign
       path = path.replace(match[0], params.route[match[1]]);
     }
   }

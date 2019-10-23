@@ -8,7 +8,7 @@ const HTTP_SERVER_ERROR = 500;
 
 function routes(app) {
   const router = express.Router();
-  const client = app.get('redisClient');
+  const client = app.get('redisCacheClient');
   const h = new RedisCache(client);
 
   router.get('/clear', (req, res) => {
@@ -44,7 +44,7 @@ function routes(app) {
           // If the key existed
           if (reply) {
             // Clear existing cached key
-            h.clearSingle(`cache:${target}`).then(r => {
+            h.clearSingle(`cache:${target}`).then((r) => {
               res.status(HTTP_OK).json({
                 message: `cache cleared for key (${hasQueryString ?
                   'with' : 'without'} params): ${target}`,
@@ -88,7 +88,7 @@ function routes(app) {
           // If the list/group existed and contains something
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
             // Clear existing cached group key
-            h.clearGroup(`cache:${target}`).then(r => {
+            h.clearGroup(`cache:${target}`).then((r) => {
               res.status(HTTP_OK).json({
                 message:
                   `cache cleared for the group key: ${req.params.target}`,

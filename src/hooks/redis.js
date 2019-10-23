@@ -6,23 +6,29 @@ import RedisCache from '../routes/helpers/redis';
 const defaults = {};
 
 export function before(options) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-param-reassign
   options = Object.assign({}, defaults, options);
 
   return function (hook) {
-    return new Promise(resolve => {
-      const client = hook.app.get('redisClient');
+    return new Promise((resolve) => {
+      const client = hook.app.get('redisCacheClient');
       const cacheOptions = hook.app.get('redisCache');
       const env = cacheOptions.env || 'production';
       const path = parsePath(hook, cacheOptions);
 
       hook.pathForRedisCache = path;
       client.get(`cache:${path}`, (err, reply) => {
-        if (err !== null) {resolve(hook); return;}
+        if (err !== null) {
+          resolve(hook);
+
+          return;
+        }
         if (reply) {
-          let data = JSON.parse(reply);
+          const data = JSON.parse(reply);
 
           if (!data.cache) {
             resolve(hook);
+
             return;
           }
           const duration = moment(data.cache.expiresOn).format('DD MMMM YYYY - HH:mm:ss');
@@ -37,6 +43,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
           }
         } else {
           resolve(hook);
+
           return;
         }
       });
@@ -45,17 +52,18 @@ export function before(options) { // eslint-disable-line no-unused-vars
 };
 
 export function after(options) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-param-reassign
   options = Object.assign({}, defaults, options);
 
   return function (hook) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if ((!hook.result) || (!hook.result.cache) || (!hook.result.cache.cached)) {
         const cacheOptions = hook.app.get('redisCache');
         const env = cacheOptions.env || 'production';
         const cachingDefault = cacheOptions.defaultDuration ? cacheOptions.defaultDuration : 3600 * 24;
         const duration = (hook.result && hook.result.cache) ?
           hook.result.cache.duration : cachingDefault;
-        const client = hook.app.get('redisClient');
+        const client = hook.app.get('redisCacheClient');
         const path = (hook.pathForRedisCache || parsePath(hook, cacheOptions));
 
         // adding a cache object
@@ -98,7 +106,7 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
     let targetTemp = target || hook.path;
 
     if (targetTemp) {
-      const client = hook.app.get('redisClient');
+      const client = hook.app.get('redisCacheClient');
       const h = new RedisCache(client);
 
       const cacheOptions = hook.app.get('redisCache');
@@ -116,7 +124,7 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
           // If the list/group existed and contains something
           if (reply && Array.isArray(reply) && (reply.length > 0)) {
             // Clear existing cached group key
-            h.clearGroup(`cache:${targetTemp}`).then(r => {
+            h.clearGroup(`cache:${targetTemp}`).then((r) => {
               if (env !== 'production') {
                 console.log({
                   message:

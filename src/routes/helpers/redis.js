@@ -110,12 +110,12 @@ export default class RedisCache {
    * @param {Object[]} array
    */
   clearAll(array) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!array.length) resolve(false);
       let i = 0;
 
       for (i; i < array.length; i++) {
-        this.clearSingle(array[i]).then(r => {
+        this.clearSingle(array[i]).then((r) => {
           if (i === array.length - 1) {
             resolve(r);
           }
