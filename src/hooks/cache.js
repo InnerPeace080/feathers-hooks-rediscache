@@ -9,7 +9,7 @@ export function cache(options) { // eslint-disable-line no-unused-vars
   options = Object.assign({}, defaults, options); // eslint-disable-line no-param-reassign
 
   return function (hook) {
-    if (!hook.result.hasOwnProperty('cache')) {
+    if (hook.result && !hook.result.hasOwnProperty('cache')) {
       let cache = {};
 
       if (Array.isArray(hook.result)) {
@@ -35,7 +35,7 @@ export function removeCacheInformation(options) { // eslint-disable-line no-unus
   options = Object.assign({}, defaults, options); // eslint-disable-line no-param-reassign
 
   return function (hook) {
-    if (hook.result.hasOwnProperty('cache')) {
+    if (hook.result && hook.result.hasOwnProperty('cache')) {
       delete hook.result.cache;
     }
 
