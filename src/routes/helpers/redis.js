@@ -100,7 +100,8 @@ export default class RedisCache {
           this.client.del(key, (e, r) => {
             resolve(r === 1);
           })
-        );
+        )
+          .catch(()=>{});
       });
     });
   }
@@ -119,7 +120,10 @@ export default class RedisCache {
           if (i === array.length - 1) {
             resolve(r);
           }
-        });
+
+          return;
+        })
+          .catch(()=>{});
       }
     });
   }

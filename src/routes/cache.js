@@ -50,7 +50,10 @@ function routes(app) {
                   'with' : 'without'} params): ${target}`,
                 status: HTTP_OK
               });
-            });
+
+              return;
+            })
+              .catch(()=>{});
           } else {
             /**
              * Empty reply means the key does not exist.
@@ -94,7 +97,10 @@ function routes(app) {
                   `cache cleared for the group key: ${req.params.target}`,
                 status: HTTP_OK
               });
-            });
+
+              return;
+            })
+              .catch(()=>{});
           } else {
             /**
              * Empty reply means the key does not exist.

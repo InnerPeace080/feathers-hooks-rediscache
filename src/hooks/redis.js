@@ -131,7 +131,10 @@ export function clearGroup(target) { // eslint-disable-line no-unused-vars
                     `cache cleared for the group key: ${targetTemp}`
                 });
               }
-            });
+
+              return;
+            })
+              .catch(()=>{});
           } else {
             /**
              * Empty reply means the key does not exist.
